@@ -13,10 +13,14 @@ envelope.addEventListener('click', () => {
   song.play().catch(() => {});
 });
 
-const target = new Date('2026-12-21T00:00:00+02:00');
-
+const target = new Date('2026-12-22T10:00:00+02:00');
 function tick() {
   let diff = Math.max(0, target - new Date());
+  if (diff === 0) {
+  document.querySelector('.countdown h2').textContent = 'Today is the day';
+  document.querySelector('.timer').style.display = 'none';
+  return;
+}
   const s = Math.floor(diff / 1000);
   document.getElementById('weeks').textContent = Math.floor(s / 604800);
   document.getElementById('days').textContent = Math.floor((s % 604800) / 86400);
@@ -26,3 +30,14 @@ function tick() {
 }
 tick();
 setInterval(tick, 1000);
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.countdown, .couple, .details, .dress, .contacts, .rsvp')
+  .forEach((el) => { el.classList.add('reveal'); io.observe(el); });

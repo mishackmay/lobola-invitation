@@ -275,3 +275,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rsvp-btn::after { animation: none; display: none; }
 }
+
+.music-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff8e7;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  box-shadow: 0 4px 14px rgba(184, 134, 11, 0.45);
+  cursor: pointer;
+}
+.music-toggle[hidden] { display: none; }
+.music-toggle:active { transform: scale(0.94); }
+.music-toggle .icon-off { display: none; }
+.music-toggle.muted .icon-on { display: none; }
+.music-toggle.muted .icon-off { display: block; }

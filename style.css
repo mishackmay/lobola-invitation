@@ -1,0 +1,234 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Cinzel', serif;
+  background: linear-gradient(#ffeee6, #fde0d4);
+  color: #7a1038;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.stage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 18px;
+  text-align: center;
+}
+
+.top-text {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  max-width: 300px;
+}
+
+.names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: #8a1c4a;
+}
+
+.envelope {
+  position: relative;
+  width: min(85vw, 380px);
+  aspect-ratio: 3 / 2;
+  margin-top: 90px;
+  cursor: pointer;
+  isolation: isolate;   /* own stacking context; no parent perspective to scramble z-order */
+}
+
+.envelope img {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  display: block;
+  pointer-events: none;
+}
+
+/* Layer order, back to front: body (1) < card (2) < front (3) < flap while closed (4) */
+.env-body  { top: 0; height: 100%; object-fit: fill; z-index: 1; }
+
+.card {
+  position: absolute;
+  left: 8.5%;
+  width: 83%;
+  bottom: 4%;
+  z-index: 2;
+  transform: translateY(0);
+  transition: transform 1.2s ease 0.7s;   /* starts after the flap has opened */
+}
+.card img { position: static !important; width: 100%; display: block; }
+
+.env-front { top: 0; height: 100%; object-fit: fill; z-index: 3; transform: translateY(7%); }
+.env-flap {
+  top: 0;
+  z-index: 4;
+  transform-origin: top center;
+  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.9s ease, opacity 0.6s ease 0.8s, z-index 0s 0.45s;
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Flap stays visible, open and behind the card */
+.envelope.open .env-flap {
+  transform: perspective(1000px) rotateX(180deg);
+  z-index: 1;
+  opacity: 0;
+  animation: none;
+}
+
+.envelope.open .card { transform: translateY(-66%); }
+
+.hint {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  transition: opacity 0.4s;
+}
+
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(212,175,55,0)); }
+  50% { filter: drop-shadow(0 0 14px rgba(212,175,55,0.9)); }
+}
+
+.countdown {
+  padding: 60px 16px 80px;
+  text-align: center;
+}
+.countdown h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #8a1c4a;
+  margin-bottom: 24px;
+}
+.timer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.timer div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+}
+.timer span {
+  font-size: 2rem;
+  color: #b8860b;
+}
+.timer small {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.details {
+  padding: 60px 20px 80px;
+  text-align: center;
+  background: #fbe9d9;
+}
+.details h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #8a1c4a;
+  margin-bottom: 12px;
+}
+.details .zulu {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.6rem;
+  color: #7a1038;
+}
+.divider {
+  width: 120px;
+  height: 1px;
+  background: #b8860b;
+  margin: 24px auto;
+}
+.details .label {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin-top: 18px;
+}
+.details .value {
+  font-size: 1.1rem;
+  margin-top: 6px;
+}
+
+.rsvp {
+  padding: 70px 20px 90px;
+  text-align: center;
+  background: linear-gradient(#fde0d4, #ffeee6);
+}
+.rsvp h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #8a1c4a;
+  margin-bottom: 10px;
+}
+.rsvp-note {
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 30px;
+}
+.rsvp-btn {
+  display: inline-block;
+  padding: 16px 34px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff8e7;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  border-radius: 40px;
+  box-shadow: 0 6px 18px rgba(184, 134, 11, 0.4);
+}
+.rsvp-btn:active { transform: scale(0.97); }
+
+.dress, .contacts {
+  padding: 60px 24px;
+  text-align: center;
+}
+.dress { background: #fbe9d9; }
+.dress h2, .contacts h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #8a1c4a;
+  margin-bottom: 20px;
+}
+.dress p {
+  max-width: 420px;
+  margin: 0 auto 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.dress strong { color: #b8860b; }
+.dress .hot { margin-top: 18px; font-style: italic; }
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 22px;
+}
+.contact span {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b8860b;
+}
+.contact a {
+  font-size: 1.2rem;
+  color: #7a1038;
+  text-decoration: none;
+}

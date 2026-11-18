@@ -72,8 +72,9 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document
-  .querySelectorAll('.countdown, .couple, .details, .dress, .contacts, .rsvp')
+  .querySelectorAll('.countdown, .couple, .verse, .details, .dress, .contacts, .rsvp')
   .forEach((el) => {
     el.classList.add('reveal');
     io.observe(el);
   });
+  
